@@ -158,7 +158,7 @@ def dataframe():
     st.dataframe(data.tail(10))
 
 def predict():
-    model = st.radio('Choose a model', ['LinearRegression', 'RandomForestRegressor', 'ExtraTreesRegressor', 'KNeighborsRegressor', 'XGBoostRegressor'])
+    model = st.radio('Choose a model:', ['LinearRegression', 'RandomForestRegressor', 'ExtraTreesRegressor', 'KNeighborsRegressor', 'XGBoostRegressor'])
     num = st.number_input('How many days do you want the forecast for?', value = 5)
     num = int(num)
     if st.button('Predict'):
