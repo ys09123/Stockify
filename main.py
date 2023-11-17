@@ -26,15 +26,17 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.ensemble import ExtraTreesRegressor
 from sklearn.metrics import r2_score, mean_absolute_error
 
-st.title('Stock Price Prediction')
+st.title('Stockify 💹')
 st.sidebar.info('Choose your options below:')
 
 def main():
-    option = st.sidebar.selectbox('Make a choice', ['Visualize', 'Recent Data', 'Predict'])
+    option = st.sidebar.selectbox('Make a choice', ['Visualize', 'Recent Data', 'Predict', 'About Me'])
     if option == 'Visualize':
         tech_indicators()
     elif option == 'Recent Data':
         dataframe()
+    elif option == 'About Me':
+        aboutMe()
     else:
         predict()
 
@@ -43,7 +45,7 @@ def download_data(op, start_date, end_date):
     df = yf.download(op, start=start_date, end=end_date, progress=False)
     return df
 
-option = st.sidebar.text_input('Enter a Stock Symbol', value='AAPL')
+option = st.sidebar.text_input('Enter a Stock Symbol', value='TSLA')
 option = option.upper()
 # company_name = yf.Ticker(option).info['longName']
 # st.subheader('Your selected company is:')
@@ -74,9 +76,10 @@ soup = BeautifulSoup(response.text, 'html.parser')
 name = soup.find('h1', class_='company__name')
 if name is not None:
     name = name.get_text(strip=True)
-    st.subheader(f"You selected:'{name}'")
+    st.subheader(f"You selected: {name}")
 else:
-    print(" ")
+    # print("")
+    pass
     
 element = soup.find('p', class_='description__text')
 if element is not None:
@@ -222,6 +225,19 @@ def model_engine(model, num):
         day += 1
 
     st.caption(f'r2_score: {round(r2_score(y_test, preds), 2)}\n\nMAE: {round(mean_absolute_error(y_test, preds), 2)}')
+
+def aboutMe():
+    st.write(
+        '''Hello!... I am Yash Kumar Shaw👦, studying BCA from MAKAUT, WB.
+        If you liked my project kindly provide your valuable feedback below''')
+    inbox = []
+    choice = st.selectbox('Contact via', ('Direct Message', 'Phone'))
+    if 'D' in choice:
+        message = st.chat_input("Write a message")
+        inbox.append(message)
+        print(inbox)
+    else:
+        st.toast('Call me at 9432151356🙏')
 
 if __name__ == '__main__':
     main()
